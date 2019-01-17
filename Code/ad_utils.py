@@ -30,15 +30,12 @@ def stats_set_creation(stats, coloumnName):
     reshapedArray = setOfRoads.reshape((numberOfRoads, 1))                                  #From (numberOfRoads, ) to (numberOfRoads, 1)
     roadsAccidentsSet = np.concatenate((zerosArray, reshapedArray), axis=1).T               #Concatenating the zero array and the roads array
     return roadsAccidentsSet
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-stats2017 = major_minor_stat_creation('F:\**\AADF-data-major-roads.csv', 'F:\**\AADF-data-minor-roads.csv', 2017)
-setOfRoads2017 = stats_set_creation(stats2017, 'Road')
+
+
+
+def accident_flows(stats):
+        
+
+
+#stats2017 = major_minor_stat_creation('F:\**\AADF-data-major-roads.csv', 'F:\**\AADF-data-minor-roads.csv', 2017)
+#setOfRoads2017 = stats_set_creation(stats2017, 'Road')
