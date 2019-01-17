@@ -40,5 +40,5 @@ def stats_set_creation(stats, coloumnName):
     
     
     
-stats2017 = major_minor_stat_creation('F:\Files\MajorProject\RAP-ter-master\Data\AADF-data-major-roads.csv', 'F:\Files\MajorProject\RAP-ter-master\Data\AADF-data-minor-roads.csv', 2017)
+stats2017 = major_minor_stat_creation('F:\**\AADF-data-major-roads.csv', 'F:\**\AADF-data-minor-roads.csv', 2017)
 setOfRoads2017 = stats_set_creation(stats2017, 'Road')
