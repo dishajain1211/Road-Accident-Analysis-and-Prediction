@@ -34,14 +34,17 @@ def stats_set_creation(stats, coloumnName):
 
 #Function that takes the roadAccidentSet(Roads and respective number of Accidents on that road) and roadName (Road on which an accident occured) as input and returns updated roadAccidentSet
 def accident_flows(roadAccidentsSet, roadName):
+    unassignedRoads = []
     for road in roadName:
-        tempLocation = np.where(roadAccidentsSet == road)                                   #The location where the road is in roadAccidentSet
-        indexToBeInc = tempLocation[1][0]                                                   #The index of that location that need to be incremented
-        roadAccidentsSet[1][indexToBeInc] = roadAccidentsSet[1][indexToBeInc] + 1           #Incrementing the count on that index
-        
-    return roadAccidentsSet
-        
-        
-    
+        if road in roadAccidentsSet:
+            tempLocation = np.where(roadAccidentsSet == road)                               #The location where the road is in roadAccidentSet
+            indexToBeInc = tempLocation[1][0]                                               #The index of that location that need to be incremented
+            roadAccidentsSet[1][indexToBeInc] = roadAccidentsSet[1][indexToBeInc] + 1       #Incrementing the count on that index
+        else:
+            unassignedRoads.append(road)
+            
+        unassignedRoads = np.array(unassignedRoads)
+    return roadAccidentsSet, unassignedRoads
+
 #stats2017 = major_minor_stat_creation('F:\**\AADF-data-major-roads.csv', 'F:\**\AADF-data-minor-roads.csv', 2017)
 #setOfRoads2017 = stats_set_creation(stats2017, 'Road')
