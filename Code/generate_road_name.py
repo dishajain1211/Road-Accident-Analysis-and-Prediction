@@ -6,10 +6,10 @@ Created on Thu Jan 16 22:58:15 2019
 
 import pandas as pd
 
-dataset = pd.read_csv(Path)                                     #read dataset from path
+
 roadname = []   
 
-print(dataset)
+#print(dataset)
 
 def road_class(classname):                                      #convert class number to class name
     if classname == 1:
@@ -25,7 +25,8 @@ def road_class(classname):                                      #convert class n
     elif classname == 6:
         return 'U'
 
-def road_name(dataset):                                         #generate road name
+def road_name():                                         #generate road name
+    dataset = pd.read_csv('F:\Files\MajorProject\RAP-ter-master\Data\Acc.csv')                                     #read dataset from path
     for index, row in dataset.iterrows():
         road_class_number = road_class(row['1st_Road_Class'])   #read class number
         road_number = row['1st_Road_Number']                    #read road number
@@ -33,4 +34,4 @@ def road_name(dataset):                                         #generate road n
         roadname.append(x)
     return roadname
 
-print(road_name(dataset))
+#print(road_name(dataset))
