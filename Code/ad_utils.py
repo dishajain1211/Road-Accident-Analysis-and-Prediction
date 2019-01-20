@@ -12,7 +12,7 @@ def major_minor_stat_creation(path1, path2, year):
     
     statsMajor = statsMajorRoads.loc[statsMajorRoads['AADFYear'] == year]                   #Traffic stats for year 2017 (Major roads)
     statsMinor = statsMinorRoads.loc[statsMinorRoads['AADFYear'] == year]                   #Traffic stats for year 2017 (Minor roads)
-    
+
     stats = [statsMajor, statsMinor]
     stats = pd.concat(stats)                                                                #Combined stats of major and minor roads for 2017
     
@@ -39,12 +39,46 @@ def accident_flows(roadAccidentsSet, roadName):
         if road in roadAccidentsSet:
             tempLocation = np.where(roadAccidentsSet == road)                               #The location where the road is in roadAccidentSet
             indexToBeInc = tempLocation[1][0]                                               #The index of that location that need to be incremented
-            roadAccidentsSet[1][indexToBeInc] = roadAccidentsSet[1][indexToBeInc] + 1       #Incrementing the count on that index
+            roadAccidentsSet[0][indexToBeInc] = roadAccidentsSet[0][indexToBeInc] + 1       #Incrementing the count on that index
         else:
             unassignedRoads.append(road)
             
-        unassignedRoads = np.array(unassignedRoads)
+#    unassignedRoads = np.array(unassignedRoads)
     return roadAccidentsSet, unassignedRoads
 
+
+
+#Helper function for accidents_per_classes() to calculate the number of accidents on road types
+def helper_for_acp(dictionaryOfClasses, array):
+    for road in array:
+        if road[-1] == ')':
+            dictionaryOfClasses['A(M)'] = dictionaryOfClasses['A(M)'] + 1
+        elif road[0] == 'A':
+            dictionaryOfClasses['A'] = dictionaryOfClasses['A'] + 1
+        elif road[0] == 'B':
+            dictionaryOfClasses['B'] = dictionaryOfClasses['B'] + 1
+        elif road[0] == 'C':
+            dictionaryOfClasses['C'] = dictionaryOfClasses['C'] + 1
+        elif road[0] == 'M':
+            dictionaryOfClasses['M'] = dictionaryOfClasses['M'] + 1
+        else:
+            dictionaryOfClasses['U'] = dictionaryOfClasses['U'] + 1
+    
+    return dictionaryOfClasses
+    
+    
+#Function to calculate the total accidents in the road cateogories A(M), A, B, C, U, M
+def accidents_per_class(roadAccidentsSet, unassignedRoads):
+    dictionaryOfClasses = {'A(M)': 0, 'A':0, 'B':0, 'C':0, 'M':0, 'U':0}                    #Dictionary comprising of the count of all classes of roads
+    
+    dictionaryOfClasses = helper_for_acp(dictionaryOfClasses, roadAccidentsSet[1])
+    dictionaryOfClasses = helper_for_acp(dictionaryOfClasses, unassignedRoads)
+    
+    return dictionaryOfClasses
+
+
+
+
+#Function that 
 #stats2017 = major_minor_stat_creation('F:\**\AADF-data-major-roads.csv', 'F:\**\AADF-data-minor-roads.csv', 2017)
 #setOfRoads2017 = stats_set_creation(stats2017, 'Road')
