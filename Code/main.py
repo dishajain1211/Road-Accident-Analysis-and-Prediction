@@ -19,7 +19,7 @@ roadAccidentsSetUpdated, unassignedRoads = ad_utils.accident_flows(roadAccidents
 setOfUnassignedRoads = set(unassignedRoads)                                                 #Creating a set of unassigned roads
 
 alteredRoadAccident = ad_utils.road_stats(roadAccidentsSet, stats)
-
+alteredRoadAccident = ad_utils.average_road_stats(alteredRoadAccident)
 
 ##Function that takes the roadAccidentSet(Roads and respective number of Accidents on that road) and roadName (Road on which an accident occured) as input and returns updated roadAccidentSet
 #def accident_flows(roadAccidentsSet, roadName):

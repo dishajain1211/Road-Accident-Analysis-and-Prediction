@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jan 17 23:50:53 2019
+@author: ADITYA
+"""
+
+
 import pandas as pd
 import numpy as np
 
@@ -129,11 +136,14 @@ def average_road_stats(alteredRoadAccident):
     
     return alteredRoadAccident
 
+
+#This function presents the stats per class i.e. FdPC, Fd2WMV... et cetera in class A roads, B roads, C roads and so on
+def stats_per_class(alteredRoadAccident):
+    dictionaryOfClasses = {'A(M)': 0, 'A':0, 'B':0, 'C':0, 'M':0, 'U':0}                    #Dictionary comprising of the count of all classes of roads
     
-    
-    
-    
-    
+
+
+
     
 #stats2017 = major_minor_stat_creation('F:\**\AADF-data-major-roads.csv', 'F:\**\AADF-data-minor-roads.csv', 2017)
 #setOfRoads2017 = stats_set_creation(stats2017, 'Road')

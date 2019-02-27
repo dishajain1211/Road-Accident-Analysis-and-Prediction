@@ -9,31 +9,28 @@ Created on Mon Dec  3 11:51:19 2018
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 
-def finding_modes(dataset):
-    modeForTime = dataset.mode().iloc[:, 2]         #returns a dataframe with mode of time(2) column
+def finding_modes(dataset, coloumnTime, coloumnSurface):
+    
+    modeForTime = dataset.mode().iloc[:, coloumnTime]
     modeForTimeVal = modeForTime[0]
-    modeForSurface = dataset.mode().iloc[:, 8]
+    modeForSurface = dataset.mode().iloc[:, coloumnSurface]
     modeForSurfaceVal = modeForSurface[0]
     
     return modeForTimeVal, modeForSurfaceVal
 
 
-def time_and_date_modifications(X, modeForTimeVal, modeForSurfaceVal):
-    for i in range(X.shape[0]):
-        temp = X[i, 0]                              # Date
-        X[i, 0] = int(temp[-7:-5])
+def time_and_date_modifications(X, modeForTimeVal, coloumnDate, coloumnTime):
+    
+    for i in range(X.shape[0]):    
+        temp = X.iloc[i, coloumnDate]
+        X.iloc[i, coloumnDate] = int(temp[-7:-5])
         
-        temp = X[i, 2]                              # Time
-        if(isinstance(temp, str)):                  # If there is a string, then convert it into the value
-            X[i, 2] = (int(temp[0:2])*60 + int(temp[-2:]))/60
-        else:                                       # Else there is probably the nan value, thus use the mode value 
-            X[i,2] = (int(modeForTimeVal[0:2])*60 + int(modeForTimeVal[-2:]))/60
         
-        temp = X[i, 8]
+        temp = X.iloc[i, coloumnTime]
         if(isinstance(temp, str)):
-            continue
-        else:
-            X[i, 8] = modeForSurfaceVal
+            X.iloc[i, coloumnTime] = int(int(temp[0:2])/6)
+        else: 
+            X.iloc[i, coloumnTime] = int(int(modeForTimeVal[0:2])/6)
         
     return X
 
@@ -49,8 +46,30 @@ def label_encode(X):
     
     return X
 
+
 def one_hot_encode(X):
     oneHotEncoder = OneHotEncoder(categorical_features=[3, 4, 6, 7, 8])
     X = oneHotEncoder.fit_transform(X).toarray()
     
     return X
+
+
+
+def average_calculator(lengthVal, L):
+    
+    LSum = sum(L)
+    
+    temp = 0
+    for i in L:
+        perc = i/LSum
+        print(perc, " ", temp,":", int(temp+lengthVal*perc))
+        temp = int(temp+lengthVal*perc) + 1
+        
+
+L = [87.7, 91.6, 97.0, 99.6, 101.6, 104.6, 105.2, 105.5, 105.0, 103.7, 100.8, 97.4]
+lengthVal = 27300
+
+average_calculator(lengthVal, L)
+    
+    
+    
