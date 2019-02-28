@@ -150,7 +150,7 @@ def time_and_light_conditions_frame_creator(valsTimeList):
 
 def weather_updater(numRange, start):
     finalRetList = rangeCreator(numRange, retList, start)
-    weatherList = [[0.677, 0.22, 0.09], [0.53, 0.25, 0.14], [0.70, 0.24, 0.06], [0.82, 0.13, 0.04], [0.87, 0.13, 0.0], [0.8, 0.2, 0.0], [0.78, 0.22, 0.0], [0.78, 0.22, 0.0], [0.7, 0.3, 0.0], [0.81, 0.19, 0.0], [0.753, 0.233, 0.023], [0.70, 0.24, 0.06]]
+    weatherList = [[0.69, 0.22, 0.09], [0.61, 0.25, 0.14], [0.70, 0.24, 0.06], [0.83, 0.13, 0.04], [0.87, 0.13, 0.0], [0.8, 0.2, 0.0], [0.78, 0.22, 0.0], [0.78, 0.22, 0.0], [0.7, 0.3, 0.0], [0.81, 0.19, 0.0], [0.753, 0.233, 0.023], [0.70, 0.24, 0.06]]
     
     mainListForWeather = []
     
@@ -183,7 +183,22 @@ def weather_frame_creator():
     weatherDF = pd.concat(frameset)
     
     return weatherDF
+
+
+def vehicle_dataframe_creator():
+    distribution = [0.78, 0.15, 0.05, 0.02]
+    distributionRows = []
+    for i in distribution:
+        temp = int(i*NUM_ROWS)
+        distributionRows.append(temp)
     
+    vehicleDF = []
+    for val, i in enumerate(distributionRows):
+        for j in range(i):
+            vehicleDF.append(val+1)
+            
+    return vehicleDF
+        
 
 retList = monthPercentage()
 retListDays = dayPercentage()
@@ -193,14 +208,23 @@ dayDF = dayFrameCreator(retListDays, NUM_ROWS)
 dayDFSaved = dayDF
 timeLightDF = time_and_light_conditions_frame_creator(valsTimeList)
 
-frames = [dayDFSaved, timeLightDF]
-concatenated = pd.concat(frames, axis = 1)
 
 weatherDF = weather_frame_creator()
 
+frames = [dayDFSaved, timeLightDF]
+concatenated = pd.concat(frames, axis = 1)
+
+
 concatenated.to_csv('concatenated.csv')
+weatherDF.to_csv('weather.csv')
 
 
+
+vehicleDF = vehicle_dataframe_creator()
+vehicleDF = pd.DataFrame(vehicleDF)
+vehicleDFShuffled = vehicleDF.sample(frac = 1).reset_index(drop=True)
+
+vehicleDFShuffled.to_csv('vehicleDF.csv')
 
 #rangeCreator(57200, retList, 27300)
 #rangeCreator(27299, retList, 84501)
