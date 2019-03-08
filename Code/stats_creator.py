@@ -77,28 +77,28 @@ def combinator(setList):
     return combination
 
 
-#statsAcc = stats_creator(FILEPATH_ACC, FEATURES_ACC)
-#statsVeh = stats_creator(FILEPATH_VEH, FEATURES_VEH)
-#
-#numVeh = statsAcc.iloc[:, 1]
-#vehType = statsVeh.iloc[:, 1]
-#vehicles = array_veh_creator(numVeh, vehType)
-#
-#vehiclesDF = data_frame_creator(vehicles)
-#
-#stats = pd.concat((statsAcc, vehiclesDF), axis=1)
-#
-#
-#columnDate = 2
-#columnTime = 4
-#columnSurfaceVal = 10
-#
-#modeForTime, modeForSurface = finding_modes(statsAcc, columnTime, columnSurfaceVal)
-#   
-#stats = time_and_date_modifications(statsAcc, modeForTime, columnDate, columnTime)
-#statsNew = pd.concat((stats, vehiclesDF), axis = 1)
+statsAcc = stats_creator(FILEPATH_ACC, FEATURES_ACC)
+statsVeh = stats_creator(FILEPATH_VEH, FEATURES_VEH)
 
-#statsNew.to_csv('out.csv')
+numVeh = statsAcc.iloc[:, 1]
+vehType = statsVeh.iloc[:, 1]
+vehicles = array_veh_creator(numVeh, vehType)
+
+vehiclesDF = data_frame_creator(vehicles)
+
+stats = pd.concat((statsAcc, vehiclesDF), axis=1)
+
+
+columnDate = 2
+columnTime = 4
+columnSurfaceVal = 10
+
+modeForTime, modeForSurface = finding_modes(statsAcc, columnTime, columnSurfaceVal)
+   
+stats = time_and_date_modifications(statsAcc, modeForTime, columnDate, columnTime)
+statsNew = pd.concat((stats, vehiclesDF), axis = 1)
+
+statsNew.to_csv('out.csv')
 statsNew = pd.read_csv(r'F:\Files\MajorProject\RAP-ter\Code\out.csv')
 statsNew = statsNew.iloc[:, 1:]
 

@@ -7,7 +7,7 @@ Created on Thu Feb 28 21:06:56 2019
 
 import pandas as pd
 
-dataframe = pd.read_csv(r'F:\Files\MajorProject\RAP-ter\DataF\out_worked_f.csv')
+dataframe = pd.read_csv(r'F:\Files\MajorProject\RAP-ter\Data\out_worked.csv')
 
 LightConditions = dataframe['Light_Conditions'].unique()
 WeatherConditions = dataframe['Weather_Conditions'].unique()
@@ -17,17 +17,7 @@ vehicles = dataframe.iloc[:, -1]
 vehiclesModifiedDF = []
 
 for i in vehicles:
-    if '1' in i:
-        vehiclesModifiedDF.append(4)
-    elif '2' in i:
-        vehiclesModifiedDF.append(4)
-    elif '3' in i:
-        vehiclesModifiedDF.append(4)
-    elif '4' in i:
-        vehiclesModifiedDF.append(4)
-    elif '5' in i:
-        vehiclesModifiedDF.append(4)
-    elif '97' in i:
+    if '97' in i:
         vehiclesModifiedDF.append(4)
     elif '90' in i:
         vehiclesModifiedDF.append(4)
@@ -55,6 +45,16 @@ for i in vehicles:
         vehiclesModifiedDF.append(2)
     elif '17' in i:
         vehiclesModifiedDF.append(2)
+    elif '1' in i:
+        vehiclesModifiedDF.append(4)
+    elif '2' in i:
+        vehiclesModifiedDF.append(4)
+    elif '3' in i:
+        vehiclesModifiedDF.append(4)
+    elif '4' in i:
+        vehiclesModifiedDF.append(4)
+    elif '5' in i:
+        vehiclesModifiedDF.append(4)
     else:
         vehiclesModifiedDF.append(1)
         

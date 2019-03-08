@@ -8,12 +8,20 @@ Created on Thu Jan 17 23:50:53 2019
 import pandas as pd
 import numpy as np
 
-#Functions that takes an year and 2 file paths: path1 and path2 for the major and minor road traffic statistics CSVs, then returns a dataframe comprising of statistics of 2017 from both the files
-#Here:
-#   year - year considered for accidents and statistics, example 2017
-#   path1 - path of major roads file, example 'F:\a.csv'
-#   path2 - path of minor roads file, example 'F:\b.csv'
+
 def major_minor_stat_creation(path1, path2, year):
+    '''
+        Functions that takes an year and 2 file paths: path1 and path2 for the major and minor road traffic statistics CSVs, then returns a dataframe comprising of statistics of 2017 from both the files
+        
+        Arguments:
+            year - year considered for accidents and statistics, example 2017
+            path1 - path of major roads file, example 'F:\a.csv'
+            path2 - path of minor roads file, example 'F:\b.csv'
+        
+        Returns:
+            stats - combined statistics for major and minor roads
+    '''
+    
     statsMajorRoads = pd.read_csv(path1)                                                    #Traffic stats for major roads of GB (A)
     statsMinorRoads = pd.read_csv(path2)                                                    #Traffic stats for minor roads of GB (B, C, Unclassified)
     
@@ -26,11 +34,20 @@ def major_minor_stat_creation(path1, path2, year):
     return stats
 
 
-#Function that takes the dataframe of stats, creates a SET of roads with another coloumn giving the count of number of accidents on that road (Here initialized to 0s)
-#Returns a 2D array such that:
-#   roadsAccidentSet[0, 0] = 0 (Number of accidents on 0th index)
-#   roadsAccidentSet[1, 0] = Axyz (The name of road at 0th index)
+
 def stats_set_creation(stats, coloumnName):
+    '''
+        Function that takes the dataframe of stats, creates a SET of roads with another coloumn giving the count of number of accidents on that road (Here initialized to 0s)
+        
+        Arguments:
+            stats - statistics from which information is to be drawn
+            coloumnName - Column name given from which information will be drawn
+        Returns:
+            roadAccidentSet - 2-D Array in the following format
+                roadsAccidentSet[0, 0] = 0 (Number of accidents on 0th index)
+                roadsAccidentSet[1, 0] = Axyz (The name of road at 0th index)
+    '''
+    
     setOfRoads = pd.unique(stats[[coloumnName]].values.ravel('K'))                          #Finds all the unique values in coloumn 'coloumnName' and then unravels it (here, unique roads)
     numberOfRoads = setOfRoads.shape[0]                                                     #Number of unique roads
     zerosArray = np.zeros((numberOfRoads, 1))
@@ -39,8 +56,20 @@ def stats_set_creation(stats, coloumnName):
     return roadsAccidentsSet
 
 
-#Function that takes the roadAccidentSet(Roads and respective number of Accidents on that road) and roadName (Road on which an accident occured) as input and returns updated roadAccidentSet and a set of accidents on unassignedRoads
+
 def accident_flows(roadAccidentsSet, roadName):
+    '''
+        Function that takes the roadAccidentSet(Roads and respective number of Accidents on that road) and roadName (Road on which an accident occured)
+        as input and returns updated roadAccidentSet and a set of accidents on unassignedRoads
+        
+        Arguments:
+            roadAccidentsSet - 2D array obtained from stats_set_creation()
+            roadName - Road on which the accident occured
+            
+        Returns:
+            roadAccidentSet - Array consisting of roads
+            unassignedRoads - Array of unassigned roads
+    '''
     unassignedRoads = []
     for road in roadName:
         if road in roadAccidentsSet:
@@ -55,9 +84,19 @@ def accident_flows(roadAccidentsSet, roadName):
 
 
 
-#Helper function for accidents_per_classes() to calculate the number of accidents on road types
-#pass dictionary and roadAccidentSet and unassignedRoads one by one
+
 def helper_for_apc(dictionaryOfClasses, array):
+    '''
+        Helper function for accidents_per_classes() to calculate the number of accidents on road types
+        pass dictionary and roadAccidentSet and unassignedRoads one by one
+        
+        
+        Arguments: 
+            dictionaryOfClasses - A dictionary of consisting of all types of road-classes present
+            array - Array of roads on which accidents occured
+        
+        Re
+    '''
     for road in array:
         if road[-1] == ')':
             dictionaryOfClasses['A(M)'] = dictionaryOfClasses['A(M)'] + 1
@@ -88,9 +127,21 @@ def accidents_per_class(roadAccidentsSet, unassignedRoads):
 
 
 
-#Function that calculates the traffic stats per road type
-#Takes as input roadAccidentSet that has roads which are uniquely identified in the traffic statistics dataset
+
 def road_stats(roadAccidentSet, stats):
+    '''
+        Function that calculates the traffic stats per road type
+        Takes as input roadAccidentSet that has roads which are uniquely identified in the traffic statistics dataset
+        
+        Arguments:
+            roadAccidentSet - Output from accident_flows
+            stats - Traffic accident statistics
+        
+        Return:
+            alternateRoadAccident - 
+    '''
+    
+    
     cols = roadAccidentSet.shape[1]
     
     #The traffic analysis dataset consists of the following coloumns that we'll consider
